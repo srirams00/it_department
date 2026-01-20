@@ -1,9 +1,10 @@
 import os
-import mysql.connector
+import psycopg2
 
-db = mysql.connector.connect(
+db = psycopg2.connect(
     host=os.environ.get("DB_HOST"),
+    database=os.environ.get("DB_NAME"),
     user=os.environ.get("DB_USER"),
     password=os.environ.get("DB_PASSWORD"),
-    database=os.environ.get("DB_NAME")
+    port=os.environ.get("DB_PORT")
 )
