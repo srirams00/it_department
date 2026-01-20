@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Department of Information Technology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- ===== NAVBAR START ===== -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ url_for('home') }}">IT Department</a>
+        
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link active" href="{{ url_for('home') }}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('about_page') }}">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('programs_page') }}">Programs</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('faculty_page') }}">Faculty</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('students_page') }}">Students</a></li>
+
+                <!-- Admin link (corner) -->
+                <li class="nav-item">
+                    <a class="nav-link text-warning" href="{{ url_for('admin_login') }}">Admin</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- ===== NAVBAR END ===== -->
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero-section text-center text-white">
+    <div class="container">
+        <h1 class="display-5 fw-bold">Department of Information Technology</h1>
+        <p class="lead mt-3">
+            Empowering students with modern computing skills, innovation, and technical excellence.
+        </p>
+    </div>
+</section>
+
+<!-- ===== ABOUT DEPARTMENT ===== -->
+<section class="container my-5">
+    <h2 class="text-center mb-4">About the Department</h2>
+    <p class="text-center">
+        The Department of Information Technology focuses on providing quality education
+        in computing, software development, and emerging technologies to prepare students
+        for the IT industry and higher studies.
+    </p>
+</section>
+
+<!-- ===== PROGRAMS OFFERED ===== -->
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Programs Offered</h2>
+
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">1st BCA (IT)</h5>
+                        <p class="card-text">Foundation in programming and IT basics.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mt-3 mt-md-0">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">2nd BCA (IT)</h5>
+                        <p class="card-text">Core subjects in software and databases.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mt-3 mt-md-0">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">3rd BCA (IT)</h5>
+                        <p class="card-text">Advanced technologies and project work.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="bg-dark text-white text-center py-3">
+    <p class="mb-0">
+        © 2026 Department of Information Technology | All Rights Reserved
+    </p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

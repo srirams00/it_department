@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Programs - IT Department</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{ url_for('home') }}">IT Department</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('about_page') }}">About</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{{ url_for('programs_page') }}">Programs</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('faculty_page') }}">Faculty</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('students_page') }}">Students</a></li>
+        <li class="nav-item"><a class="nav-link text-warning" href="{{ url_for('admin_login') }}">Admin</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<section class="bg-primary text-white text-center p-5">
+    <h1>Our Academic Programs</h1>
+    <p>Undergraduate Programs Offered by the IT Department</p>
+</section>
+
+<!-- Programs Section -->
+<section class="container my-5">
+    <div class="row g-4">
+
+        <!-- 1st BCA -->
+        <div class="col-md-4">
+            <div class="card shadow h-100">
+                <div class="card-body">
+                    <h4 class="card-title text-primary">1st Year BCA (IT)</h4>
+                    <p class="card-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+                    </p>
+                    <ul>
+                        <li>Programming Fundamentals</li>
+                        <li>Computer Basics</li>
+                        <li>Mathematics</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2nd BCA -->
+        <div class="col-md-4">
+            <div class="card shadow h-100">
+                <div class="card-body">
+                    <h4 class="card-title text-success">2nd Year BCA (IT)</h4>
+                    <p class="card-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+                    </p>
+                    <ul>
+                        <li>Data Structures</li>
+                        <li>Database Management</li>
+                        <li>Web Development</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3rd BCA -->
+        <div class="col-md-4">
+            <div class="card shadow h-100">
+                <div class="card-body">
+                    <h4 class="card-title text-danger">3rd Year BCA (IT)</h4>
+                    <p class="card-text">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Duis sagittis ipsum. Praesent mauris.
+                    </p>
+                    <ul>
+                        <li>Full Stack Development</li>
+                        <li>Project Work</li>
+                        <li>Placement Training</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center p-3 mt-5">
+    &copy; 2026 IT Department. All Rights Reserved.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
