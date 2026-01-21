@@ -26,11 +26,11 @@
                 {% for f in faculty %}
                 <tr>
                     <td>{{ loop.index }}</td>
-                    <td>{{ f.name }}</td>
-                    <td>{{ f.designation }}</td>
-                    <td>{{ f.qualification }}</td>
-                    <td>{{ f.experience }}</td>
-                    <td>{{ f.subject }}</td>
+                    <td>{{ f[1] }}</td> <!-- name -->
+                    <td>{{ f[2] }}</td> <!-- designation -->
+                    <td>{{ f[3] }}</td> <!-- qualification -->
+                    <td>{{ f[4] }}</td> <!-- experience -->
+                    <td>{{ f[5] }}</td> <!-- subject -->
                 </tr>
                 {% endfor %}
             </tbody>

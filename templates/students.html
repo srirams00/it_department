@@ -10,19 +10,19 @@
 <body>
 <div class="container my-5">
 
-    <div>
-  <a href="/students">All</a>
-  <a href="/students?year=1st%20BCA">1st BCA</a>
-<a href="/students?year=2nd%20BCA">2nd BCA</a>
-<a href="/students?year=3rd%20BCA">3rd BCA</a>
+    <!-- Filters -->
+    <div class="mb-3">
+        <a href="{{ url_for('students_page') }}">All</a> |
+        <a href="{{ url_for('students_page', year='1st BCA') }}">1st BCA</a> |
+        <a href="{{ url_for('students_page', year='2nd BCA') }}">2nd BCA</a> |
+        <a href="{{ url_for('students_page', year='3rd BCA') }}">3rd BCA</a>
+    </div>
 
-</div>
-
-<form method="get" action="/students">
-  <input type="text" name="search" placeholder="Search student name">
-  <button type="submit">Search</button>
-</form>
-
+    <!-- Search -->
+    <form method="get" action="{{ url_for('students_page') }}" class="mb-4">
+        <input type="text" name="search" placeholder="Search student name" class="form-control d-inline-block w-auto">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
 
     <h2 class="text-center mb-4">Our Students</h2>
     <div class="table-responsive">
@@ -33,29 +33,31 @@
                     <th>Name</th>
                     <th>Reg No</th>
                     <th>Class</th>
-            
                     <th>Section</th>
                     <th>Email</th>
                     <th>Phone</th>
-                   
                 </tr>
             </thead>
             <tbody>
-                {% for s in students %}
-                <tr>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ s.name }}</td>
-                    <td>{{ s.reg_no }}</td>
-                    <td>{{ s.class }}</td>
-            
-                    <td>{{ s.section }}</td>
-                    <td>{{ s.email }}</td>
-                    <td>{{ s.phone }}</td>
-                </tr>
-                {% endfor %}
+                {% if students %}
+                    {% for s in students %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ s[1] }}</td> <!-- name -->
+                        <td>{{ s[2] }}</td> <!-- reg_no -->
+                        <td>{{ s[3] }}</td> <!-- year/class -->
+                        <td>{{ s[4] }}</td> <!-- section -->
+                        <td>{{ s[5] }}</td> <!-- email -->
+                        <td>{{ s[6] }}</td> <!-- phone -->
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7">No students found.</td>
+                    </tr>
+                {% endif %}
             </tbody>
         </table>
-        
     </div>
 </div>
 
