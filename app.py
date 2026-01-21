@@ -37,29 +37,22 @@ def admin_login():
         username = request.form["username"]
         password = request.form["password"]
 
-        
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM admin WHERE username=%s AND password=%s", (username, password))
+        cursor.execute(
+            "SELECT id, username FROM admin WHERE username=%s AND password=%s",
+            (username, password)
+        )
         admin = cursor.fetchone()
+        cursor.close()
 
         if admin:
-            session["admin"] = admin["username"]
+            session["admin"] = admin[1]   # username index
             return redirect("/admin/dashboard")
         else:
             return render_template("admin/login.html", error="Invalid Login")
 
     return render_template("admin/login.html")
 
-@app.route("/admin/dashboard")
-def dashboard():
-    if "admin" not in session:
-        return redirect("/admin/login")
-    return render_template("admin/dashboard.html")
-
-@app.route("/admin/logout")
-def logout():
-    session.clear()
-    return redirect("/")
 
 # ================== FACULTY MANAGEMENT ==================
 @app.route("/admin/faculty", methods=["GET", "POST"])
@@ -67,30 +60,52 @@ def manage_faculty():
     if "admin" not in session:
         return redirect("/admin/login")
 
-   
     cursor = db.cursor()
 
+    # INSERT FACULTY
     if request.method == "POST":
         cursor.execute(
-            "INSERT INTO faculty (name, designation, qualification, experience, subject) VALUES (%s,%s,%s,%s,%s)",
-            (request.form["name"], request.form["designation"],
-             request.form["qualification"], request.form["experience"],
-             request.form["subject"])
+            """
+            INSERT INTO faculty
+            (name, designation, qualification, experience, subject)
+            VALUES (%s, %s, %s, %s, %s)
+            """,
+            (
+                request.form.get("name"),
+                request.form.get("designation"),
+                request.form.get("qualification"),
+                request.form.get("experience"),
+                request.form.get("subject"),
+            )
         )
         db.commit()
 
-    cursor.execute("SELECT * FROM faculty")
+    # FETCH FACULTY (EXPLICIT COLUMNS)
+    cursor.execute(
+        """
+        SELECT id, name, designation, qualification, experience, subject
+        FROM faculty
+        ORDER BY name ASC
+        """
+    )
+
     faculty = cursor.fetchall()
     cursor.close()
+
     return render_template("admin/manage_faculty.html", faculty=faculty)
 
 @app.route("/admin/faculty/delete/<int:id>")
 def delete_faculty(id):
-    
+    if "admin" not in session:
+        return redirect("/admin/login")
+
     cursor = db.cursor()
-    cursor.execute("DELETE FROM faculty WHERE id=%s", (id,))
+    cursor.execute("DELETE FROM faculty WHERE id = %s", (id,))
     db.commit()
+    cursor.close()
+
     return redirect("/admin/faculty")
+
 
 # ================== STUDENT MANAGEMENT ==================
 @app.route("/admin/students", methods=["GET", "POST"])
@@ -104,33 +119,36 @@ def manage_students():
     if request.method == "POST":
         cursor.execute(
             """
-            INSERT INTO students 
-            (name, reg_no, year, section, email, phone)
+            INSERT INTO students
+            (name, reg_no, "year", section, email, phone)
             VALUES (%s, %s, %s, %s, %s, %s)
             """,
             (
-                request.form["name"],
-                request.form["reg_no"],
-                request.form["year"],
-                request.form["section"],
-                request.form["email"],
-                request.form["phone"]
+                request.form.get("name"),
+                request.form.get("reg_no"),
+                request.form.get("year"),
+                request.form.get("section"),
+                request.form.get("email"),
+                request.form.get("phone"),
             )
         )
         db.commit()
 
-    # FETCH STUDENTS (ORDERED)
-    cursor.execute("""
-        SELECT * FROM students
+    # FETCH STUDENTS (EXPLICIT COLUMNS)
+    cursor.execute(
+        """
+        SELECT id, name, reg_no, "year", section, email, phone
+        FROM students
         ORDER BY
-        CASE year
+        CASE "year"
             WHEN '1st BCA' THEN 1
             WHEN '2nd BCA' THEN 2
             WHEN '3rd BCA' THEN 3
         END,
         name ASC
-    """)
-    
+        """
+    )
+
     students = cursor.fetchall()
     cursor.close()
 
