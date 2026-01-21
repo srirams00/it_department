@@ -1,8 +1,6 @@
-import mysql.connector
+import psycopg2
+import os
 
-db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="sriram @00",        # XAMPP default is empty
-    database="it_department"
-)
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+db = psycopg2.connect(DATABASE_URL)

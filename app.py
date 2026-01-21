@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect, session, url_for
 from config import db
+from dotenv import load_dotenv
+load_dotenv()
+
 
 app = Flask(__name__)
 app.secret_key = "secret123"
@@ -12,7 +15,7 @@ def home():
 @app.route("/faculty")
 def faculty_page():
    
-    cursor = db.cursor(dictionary=True)
+    cursor = db.cursor()
     cursor.execute("SELECT * FROM faculty")
     faculty = cursor.fetchall()
     return render_template("faculty.html", faculty=faculty)
@@ -20,7 +23,7 @@ def faculty_page():
 @app.route("/students")
 def students_page():
     
-    cursor = db.cursor(dictionary=True)
+    cursor = db.cursor()
     cursor.execute("SELECT * FROM students")
     students = cursor.fetchall()
     return render_template("students.html", students=students)
@@ -33,7 +36,7 @@ def admin_login():
         password = request.form["password"]
 
         
-        cursor = db.cursor(dictionary=True)
+        cursor = db.cursor()
         cursor.execute("SELECT * FROM admin WHERE username=%s AND password=%s", (username, password))
         admin = cursor.fetchone()
 
@@ -63,7 +66,7 @@ def manage_faculty():
         return redirect("/admin/login")
 
    
-    cursor = db.cursor(dictionary=True)
+    cursor = db.cursor()
 
     if request.method == "POST":
         cursor.execute(
@@ -92,30 +95,45 @@ def manage_students():
     if "admin" not in session:
         return redirect("/admin/login")
 
-   
     cursor = db.cursor(dictionary=True)
 
+    # INSERT STUDENT
     if request.method == "POST":
         cursor.execute(
-            "INSERT INTO students (name, reg_no, year, section, email, phone) VALUES (%s,%s,%s,%s,%s,%s)",
-            (request.form["name"], request.form["reg_no"],
-             request.form["year"], request.form["section"],
-             request.form["email"], request.form["phone"])
+            """
+            INSERT INTO students 
+            (name, reg_no, year, section, email, phone)
+            VALUES (%s, %s, %s, %s, %s, %s)
+            """,
+            (
+                request.form["name"],
+                request.form["reg_no"],
+                request.form["year"],
+                request.form["section"],
+                request.form["email"],
+                request.form["phone"]
+            )
         )
         db.commit()
 
-    cursor.execute("SELECT * FROM students")
+    # FETCH STUDENTS (ORDERED)
+    cursor.execute("""
+        SELECT * FROM students
+        ORDER BY
+        CASE year
+            WHEN '1st BCA' THEN 1
+            WHEN '2nd BCA' THEN 2
+            WHEN '3rd BCA' THEN 3
+        END,
+        name ASC
+    """)
+    
     students = cursor.fetchall()
+    cursor.close()
+
     return render_template("admin/manage_students.html", students=students)
 
-@app.route("/admin/students/delete/<int:id>")
-def delete_student(id):
-   
-    cursor = db.cursor()
-    cursor.execute("DELETE FROM students WHERE id=%s", (id,))
-    db.commit()
-    return redirect("/admin/students")
-
+# ================== tem ==================
 @app.route("/about")
 def about_page():
     return render_template("about.html")
@@ -128,7 +146,7 @@ def programs_page():
 
 # ================== RUN APP ==================
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
 
 
 

@@ -9,6 +9,21 @@
 </head>
 <body>
 <div class="container my-5">
+
+    <div>
+  <a href="/students">All</a>
+  <a href="/students?year=1st%20BCA">1st BCA</a>
+<a href="/students?year=2nd%20BCA">2nd BCA</a>
+<a href="/students?year=3rd%20BCA">3rd BCA</a>
+
+</div>
+
+<form method="get" action="/students">
+  <input type="text" name="search" placeholder="Search student name">
+  <button type="submit">Search</button>
+</form>
+
+
     <h2 class="text-center mb-4">Our Students</h2>
     <div class="table-responsive">
         <table class="table table-striped table-hover table-bordered align-middle text-center">
@@ -17,10 +32,12 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Reg No</th>
-                    <th>Year</th>
+                    <th>Class</th>
+            
                     <th>Section</th>
                     <th>Email</th>
                     <th>Phone</th>
+                   
                 </tr>
             </thead>
             <tbody>
@@ -29,7 +46,8 @@
                     <td>{{ loop.index }}</td>
                     <td>{{ s.name }}</td>
                     <td>{{ s.reg_no }}</td>
-                    <td>{{ s.year }}</td>
+                    <td>{{ s.class }}</td>
+            
                     <td>{{ s.section }}</td>
                     <td>{{ s.email }}</td>
                     <td>{{ s.phone }}</td>
@@ -37,6 +55,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        
     </div>
 </div>
 
