@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, url_for
-from config import get_db_connection
+from config import db
 
 app = Flask(__name__)
 app.secret_key = "secret123"
@@ -11,7 +11,7 @@ def home():
 
 @app.route("/faculty")
 def faculty_page():
-    db = get_db_connection()
+   
     cursor = db.cursor(dictionary=True)
     cursor.execute("SELECT * FROM faculty")
     faculty = cursor.fetchall()
@@ -19,7 +19,7 @@ def faculty_page():
 
 @app.route("/students")
 def students_page():
-    db = get_db_connection()
+    
     cursor = db.cursor(dictionary=True)
     cursor.execute("SELECT * FROM students")
     students = cursor.fetchall()
@@ -32,7 +32,7 @@ def admin_login():
         username = request.form["username"]
         password = request.form["password"]
 
-        db = get_db_connection()
+        
         cursor = db.cursor(dictionary=True)
         cursor.execute("SELECT * FROM admin WHERE username=%s AND password=%s", (username, password))
         admin = cursor.fetchone()
@@ -62,7 +62,7 @@ def manage_faculty():
     if "admin" not in session:
         return redirect("/admin/login")
 
-    db = get_db_connection()
+   
     cursor = db.cursor(dictionary=True)
 
     if request.method == "POST":
@@ -80,7 +80,7 @@ def manage_faculty():
 
 @app.route("/admin/faculty/delete/<int:id>")
 def delete_faculty(id):
-    db = get_db_connection()
+    
     cursor = db.cursor()
     cursor.execute("DELETE FROM faculty WHERE id=%s", (id,))
     db.commit()
@@ -92,7 +92,7 @@ def manage_students():
     if "admin" not in session:
         return redirect("/admin/login")
 
-    db = get_db_connection()
+   
     cursor = db.cursor(dictionary=True)
 
     if request.method == "POST":
@@ -110,7 +110,7 @@ def manage_students():
 
 @app.route("/admin/students/delete/<int:id>")
 def delete_student(id):
-    db = get_db_connection()
+   
     cursor = db.cursor()
     cursor.execute("DELETE FROM students WHERE id=%s", (id,))
     db.commit()
