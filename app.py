@@ -18,6 +18,7 @@ def faculty_page():
     cursor = db.cursor()
     cursor.execute("SELECT * FROM faculty")
     faculty = cursor.fetchall()
+    cursor.close()
     return render_template("faculty.html", faculty=faculty)
 
 @app.route("/students")
@@ -26,6 +27,7 @@ def students_page():
     cursor = db.cursor()
     cursor.execute("SELECT * FROM students")
     students = cursor.fetchall()
+    cursor.close()
     return render_template("students.html", students=students)
 
 # ================== ADMIN (HOD) ==================
@@ -79,6 +81,7 @@ def manage_faculty():
 
     cursor.execute("SELECT * FROM faculty")
     faculty = cursor.fetchall()
+    cursor.close()
     return render_template("admin/manage_faculty.html", faculty=faculty)
 
 @app.route("/admin/faculty/delete/<int:id>")
@@ -95,7 +98,7 @@ def manage_students():
     if "admin" not in session:
         return redirect("/admin/login")
 
-    cursor = db.cursor(dictionary=True)
+    cursor = db.cursor()
 
     # INSERT STUDENT
     if request.method == "POST":
